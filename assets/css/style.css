@@ -50,7 +50,7 @@ body {
 .hero-ai {
   position: relative;
   z-index: 1;
-  padding: 200px 0 150px;
+  padding: 200px 0 140px;
 }
 
 .hero-ai .bottom-bg {
@@ -317,6 +317,7 @@ body {
 /* Features Section CSS */
 .features-ai {
   position: relative;
+  background-color: #fff;
 }
 
 .features-ai .element {
@@ -373,9 +374,16 @@ body {
 .features-ai .section-image-box {
   padding: 25px 30px;
   border-radius: 10px;
-  background: -webkit-gradient(linear, left top, right top, from(#FE7587), to(#7D42DC));
-  background: linear-gradient(90deg, #FE7587 0%, #7D42DC 100%);
+  background: linear-gradient(90deg, #FF4D4D 0%, #8B0000 100%);
   height: 565px;
+}
+
+.features-ai .section-image-box img {
+  object-fit: cover;
+  object-position: center 70%;
+  width: 100%;
+  /* Ensure it fills its container */
+  height: 100%;
 }
 
 @media (max-width: 767px) {
@@ -391,8 +399,19 @@ body {
   border-radius: 7px;
 }
 
+.features-two-ai {
+  background-color: #fff;
+}
+
+.features-ai .section-title h2,
+.features-ai .section-title p,
+.features-two-ai .section-title h2,
+.features-two-ai p {
+  color: #000000;
+}
+
 .section-content-box .sasly-iconic-box.style-seven {
-  background: rgba(255, 255, 255, 0.05);
+  background: #000000;
   border: 1px solid rgba(255, 255, 255, 0.1);
   padding: 35px 40px 30px;
   border-radius: 10px;
@@ -532,7 +551,7 @@ body {
   padding: 15px 20px;
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: #000;
 }
 
 .faq-ai .accordion-item .accordion-header .accordion-title {
@@ -1087,19 +1106,178 @@ body {
 .btns {
   margin-top: 90px;
 }
+
 .btns .theme-btn {
-      font-size: 18px;
-    padding: 17px 25px;
-    border-radius: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    background-color: rgba(255, 255, 255, 0.1)t;
-    color: var(--white-color);
-    z-index: 11;
-    cursor: pointer;
+  font-size: 18px;
+  padding: 17px 25px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.1)t;
+  color: var(--white-color);
+  z-index: 11;
+  cursor: pointer;
 }
 
 @media screen and (max-width:576px) {
   .btns {
-  margin-top: 60px;
+    margin-top: 60px;
+  }
 }
+
+.hero-content img {
+  border-radius: 20px;
 }
+
+.buy-btns {
+  font-size: 18px;
+  padding: 10px 44px;
+  border-radius: 8px;
+  border: 1px solid #FF4D4D;
+  background-color: #FF4D4D;
+  background: linear-gradient(90deg, #FF4D4D 0%, #8B0000 100%);
+  color: var(--white-color);
+  text-transform: uppercase;
+  transition: all 0.3s ease-in-out;
+}
+
+.buy-btns:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--white-color);
+}
+
+.client-item h3 span {
+  font-weight: 600;
+  background: -webkit-gradient(linear, left top, right top, from(#FF4D4D), to(#8B0000));
+  background: linear-gradient(90deg, #FF4D4D 0%, #8B0000 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.sasly-card-item .check-list li {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.sasly-card-item .card-image-box img {
+  max-height: 440px;
+  object-fit: cover;
+  object-position: center 70%;
+}
+
+@media screen and (max-width:768px) {
+  .sasly-card-item .card-image-box img {
+    max-height: 280px;
+  }
+}
+
+.sasly-card-item .card-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: start;
+}
+
+
+.faq-ai .accordion-item .accordion-header .accordion-title:after {
+  display: none;
+}
+
+.accordion-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.accordion-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(16, 16, 16, 0.1);
+  background-color: rgba(255, 255, 255, 0.05);
+  color: var(--primary-color);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+  flex-shrink: 0;
+}
+
+.accordion-item.open .accordion-icon {
+  transform: rotate(45deg);
+  /* transforms + into × */
+}
+
+.sasly-iconic-box.style-ten {
+  background: rgba(255, 255, 255, 0.05);
+  height: 100%;
+}
+
+.sasly-iconic-box .number {
+  display: block;
+}
+
+.sasly-iconic-box .content .content-main span {
+  display: block;
+  height: 40px;
+}
+
+.benefit-ai .sasly-iconic-box.style-ten {
+  padding: 20px 20px 25px 20px;
+}
+
+.benefit-ai .sasly-iconic-box.style-ten .content-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.sasly-card-item.style-five {
+  background-color: #000000;
+}
+
+.pricing-card .price {
+  font-size: 38px;
+  color: #fff !important;
+}
+
+@media screen and (max-width:768px) {
+  .pricing-card .price {
+    font-size: 34px;
+  }
+}
+
+.benefit-ai, .faq-ai {
+  background-color: #fff !important;
+
+}
+
+.benefit-ai .sasly-iconic-box.style-ten, .hero-ai, .ai-footer {
+  background-color: #000000;
+}
+
+.benefit-ai h2, .faq-ai h2, .faq-ai .subhead {
+  color: #000000 !important;
+}
+
+.home-bg {
+   background-color: #fff !important;
+}
+
+.faq-ai .buy-btns:hover {
+  color: #FF4D4D;
+}
+
+
+
+
+
+
+
+
+
+
+
