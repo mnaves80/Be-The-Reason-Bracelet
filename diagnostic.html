@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Excuse Mindset Diagnostic | Be The Reason</title>
+<style>
+  :root {
+    --red: #D62828;
+    --black: #111111;
+    --white: #FFFFFF;
+    --gray: #6b6b6b;
+    --light: #f4f4f4;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    height: 100%;
+    background: var(--black);
+    font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+    color: var(--white);
+  }
+  .app {
+    max-width: 480px;
+    margin: 0 auto;
+    min-height: 100vh;
+    background: var(--black);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  .progress-wrap {
+    height: 5px;
+    background: #2a2a2a;
+    width: 100%;
+  }
+  .progress-bar {
+    height: 100%;
+    background: var(--red);
+    width: 0%;
+    transition: width 0.35s ease;
+  }
+  .screen {
+    flex: 1;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    padding: 40px 28px;
+    animation: fadeIn 0.4s ease;
+  }
+  .screen.active { display: flex; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Intro */
+  .brand {
+    font-size: 13px;
+    letter-spacing: 3px;
+    color: var(--red);
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+  h1 {
+    font-size: 32px;
+    line-height: 1.15;
+    font-weight: 800;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    letter-spacing: -0.5px;
+  }
+  .sub {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #cfcfcf;
+    margin-bottom: 28px;
+  }
+  .meta {
+    font-size: 13px;
+    color: var(--gray);
+    margin-bottom: 32px;
+  }
+  button {
+    font-family: inherit;
+    cursor: pointer;
+    border: none;
+  }
+  .btn-primary {
+    background: var(--red);
+    color: var(--white);
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 18px 24px;
+    border-radius: 4px;
+    width: 100%;
+    transition: transform 0.15s ease, background 0.15s ease;
+  }
+  .btn-primary:hover { background: #b91f1f; }
+  .btn-primary:active { transform: scale(0.98); }
+
+  /* Question screens */
+  .q-count {
+    font-size: 13px;
+    color: var(--red);
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .q-text {
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: 28px;
+  }
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .option {
+    background: #1c1c1c;
+    border: 1px solid #333;
+    color: var(--white);
+    text-align: left;
+    padding: 16px 18px;
+    font-size: 15px;
+    line-height: 1.4;
+    border-radius: 6px;
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+  .option:hover {
+    border-color: var(--red);
+    background: #241414;
+  }
+
+  /* Result screen */
+  .result-tag {
+    font-size: 13px;
+    letter-spacing: 2px;
+    color: var(--red);
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .result-title {
+    font-size: 30px;
+    font-weight: 800;
+    text-transform: uppercase;
+    line-height: 1.15;
+    margin-bottom: 20px;
+  }
+  .result-body {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #dcdcdc;
+    margin-bottom: 20px;
+  }
+  .law-block {
+    border-left: 3px solid var(--red);
+    padding: 14px 16px;
+    background: #1a1a1a;
+    margin-bottom: 20px;
+  }
+  .law-label {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--red);
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .law-text {
+    font-size: 16px;
+    font-style: italic;
+    line-height: 1.4;
+  }
+  .prescription {
+    font-size: 15px;
+    line-height: 1.6;
+    color: #dcdcdc;
+    margin-bottom: 30px;
+  }
+  .prescription strong { color: var(--white); }
+  .cta-block {
+    background: #1c1c1c;
+    border-radius: 8px;
+    padding: 22px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .cta-line {
+    font-size: 15px;
+    color: #cfcfcf;
+    margin-bottom: 16px;
+    line-height: 1.4;
+  }
+  .share-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  .btn-secondary {
+    flex: 1;
+    background: transparent;
+    border: 1px solid #444;
+    color: var(--white);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 14px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .btn-secondary:hover { border-color: var(--red); }
+  .tag-line {
+    text-align: center;
+    font-size: 13px;
+    color: var(--gray);
+    margin-top: 24px;
+    line-height: 1.5;
+  }
+  .restart {
+    text-align: center;
+    margin-top: 18px;
+    font-size: 13px;
+    color: var(--gray);
+    text-decoration: underline;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
+
+  <!-- INTRO -->
+  <div class="screen active" id="screen-intro">
+    <div class="brand">Be The Reason</div>
+    <h1>The Excuse Mindset Diagnostic</h1>
+    <p class="sub">Everyone has one. The question is which one is running you.</p>
+    <p class="meta">10 questions &middot; 2 minutes &middot; no email required to see your result</p>
+    <button class="btn-primary" onclick="startQuiz()">Start</button>
+  </div>
+
+  <!-- QUESTIONS INJECTED HERE -->
+  <div id="questions-container"></div>
+
+  <!-- RESULTS INJECTED HERE -->
+  <div id="results-container"></div>
+
+</div>
+
+<script>
+const questions = [
+  {
+    text: "It's Monday morning and the plan is set. What actually knocks you off it?",
+    options: [
+      { letter: "A", text: "Something more urgent came up — there wasn't time." },
+      { letter: "B", text: "I wasn't sure I was doing it right, so I put it off." },
+      { letter: "C", text: "Someone close to me said it probably wouldn't work." },
+      { letter: "D", text: "I just didn't feel like I had it in me today." }
+    ]
+  },
+  {
+    text: "You want to start something — a business, a routine, a comeback. What's the real hold-up?",
+    options: [
+      { letter: "A", text: "Timing. Right now isn't the right season." },
+      { letter: "B", text: "Preparation. One more course, one more plan, one more rep first." },
+      { letter: "C", text: "Reaction. You're bracing for what people will say." },
+      { letter: "D", text: "Belief. Some days you're not sure you're the person who pulls this off." }
+    ]
+  },
+  {
+    text: "Someone doubts you to your face. What happens next?",
+    options: [
+      { letter: "A", text: "You agree — you'll prove it \"when the time is right.\"" },
+      { letter: "B", text: "You quietly decide to wait until you're undeniable before trying." },
+      { letter: "C", text: "Their voice becomes the loudest one in your head for weeks." },
+      { letter: "D", text: "You start looking for evidence they might be right." }
+    ]
+  },
+  {
+    text: "Be honest — what's on your excuse list most often?",
+    options: [
+      { letter: "A", text: "\"I don't have time.\"" },
+      { letter: "B", text: "\"I'm not ready yet.\"" },
+      { letter: "C", text: "\"Nobody around me believes in this.\"" },
+      { letter: "D", text: "\"Maybe I'm just not built for this.\"" }
+    ]
+  },
+  {
+    text: "You hit a setback. First reaction?",
+    options: [
+      { letter: "A", text: "I'll pick this back up when things settle down." },
+      { letter: "B", text: "I clearly need more prep before I try again." },
+      { letter: "C", text: "Maybe they were right about me." },
+      { letter: "D", text: "This confirms what I already suspected." }
+    ]
+  },
+  {
+    text: "What does \"someday\" sound like in your head?",
+    options: [
+      { letter: "A", text: "When I have more time." },
+      { letter: "B", text: "When I feel ready." },
+      { letter: "C", text: "When people stop doubting me." },
+      { letter: "D", text: "When I actually believe I can." }
+    ]
+  },
+  {
+    text: "What would your closest friend say is really holding you back?",
+    options: [
+      { letter: "A", text: "You're always \"too busy\" for the thing that matters most." },
+      { letter: "B", text: "You overprepare and underact." },
+      { letter: "C", text: "You let other people's opinions set your ceiling." },
+      { letter: "D", text: "You talk yourself out of things before you start." }
+    ]
+  },
+  {
+    text: "When you imagine the version of you that already made it — what separates you from him?",
+    options: [
+      { letter: "A", text: "He found the time. You're still finding it." },
+      { letter: "B", text: "He stopped waiting to feel ready." },
+      { letter: "C", text: "He stopped needing everyone's approval." },
+      { letter: "D", text: "He believed it before it was true." }
+    ]
+  },
+  {
+    text: "What's the last thing you didn't do, that you wanted to?",
+    options: [
+      { letter: "A", text: "I ran out of time for it." },
+      { letter: "B", text: "I wasn't prepared enough yet." },
+      { letter: "C", text: "Someone talked me out of it." },
+      { letter: "D", text: "I didn't think I could pull it off." }
+    ]
+  },
+  {
+    text: "If nothing changes in the next 12 months, what's the reason?",
+    options: [
+      { letter: "A", text: "Time." },
+      { letter: "B", text: "Readiness." },
+      { letter: "C", text: "Other people." },
+      { letter: "D", text: "Belief in myself." }
+    ]
+  }
+];
+
+const results = {
+  A: {
+    tag: "Your Excuse",
+    title: "Not Yet",
+    body: "You're not lazy and you're not scared. You're waiting for a green light that was never going to come. “Not yet” feels responsible. It feels like patience. It's not — it's a decision dressed up as a reason, and you've been making it on repeat.<br><br>You have the same 24 hours as everyone who did it anyway.",
+    law: "Discipline is what you do on the days you don't feel like it.",
+    prescription: "<strong>Prescription:</strong> Pick the smallest version of the thing you keep postponing. Do it today, before you close this tab. Not the plan — the rep.",
+    cta: "The bracelet is worn by people who already stopped waiting for later. Every tap is a decision to keep going — starting now, not eventually."
+  },
+  B: {
+    tag: "Your Excuse",
+    title: "Not Ready",
+    body: "You collect preparation like it's proof. One more plan, one more course, one more version of the idea — and still no rep. Confidence doesn't come before the work. It comes from it.<br><br>You already have what it takes. You just haven't started collecting evidence yet.",
+    law: "Confidence comes from the reps, not before them.",
+    prescription: "<strong>Prescription:</strong> Do the unfinished, imperfect version today. Ready is a feeling you earn after, not a checkpoint you hit before.",
+    cta: "The bracelet doesn't wait for ready. Every tap is proof you started anyway."
+  },
+  C: {
+    tag: "Your Excuse",
+    title: "Borrowed Doubt",
+    body: "Somewhere along the way, someone else's ceiling became yours. Their opinion was never the truth — it was their limit, not yours. You've been carrying it like it's fact.",
+    law: "You are the reason for your own success.",
+    prescription: "<strong>Prescription:</strong> Name the person or the voice you've been outsourcing belief to. Then do the thing they doubted — quietly, without telling them first.",
+    cta: "The bracelet is a private decision, not a public argument. You don't need their belief. You need your own."
+  },
+  D: {
+    tag: "Your Excuse",
+    title: "Not Enough",
+    body: "You treat self-doubt like it's a verdict. It's not. Self-doubt is noise, and you've been letting the loudest thing in the room win.",
+    law: "The version of you that wins already exists. Your job is to become him.",
+    prescription: "<strong>Prescription:</strong> Don't wait to feel like enough. Act like the version of you that already is, for one hour today. That's the whole assignment.",
+    cta: "The bracelet is the reminder on the days the noise gets loud. It doesn't ask if you feel like it — it asks if you tapped it anyway."
+  }
+};
+
+// ---- CONFIG: update these before publishing ----
+const BRACELET_URL = "https://www.btrbracelets.com/all-products.html"; // replace with your product page link
+const IG_HANDLE = "@btrbracelets"; // replace with your handle
+// -------------------------------------------------
+
+let current = 0;
+const tally = { A: 0, B: 0, C: 0, D: 0 };
+
+const qContainer = document.getElementById('questions-container');
+const rContainer = document.getElementById('results-container');
+const progressBar = document.getElementById('progressBar');
+
+questions.forEach((q, i) => {
+  const div = document.createElement('div');
+  div.className = 'screen';
+  div.id = 'screen-q' + i;
+  div.innerHTML = `
+    <div class="q-count">Question ${i + 1} of ${questions.length}</div>
+    <div class="q-text">${q.text}</div>
+    <div class="options">
+      ${q.options.map(opt => `<button class="option" onclick="answer('${opt.letter}')">${opt.text}</button>`).join('')}
+    </div>
+  `;
+  qContainer.appendChild(div);
+});
+
+Object.keys(results).forEach(letter => {
+  const r = results[letter];
+  const div = document.createElement('div');
+  div.className = 'screen';
+  div.id = 'screen-r' + letter;
+  div.innerHTML = `
+    <div class="result-tag">${r.tag}</div>
+    <div class="result-title">${r.title}</div>
+    <div class="result-body">${r.body}</div>
+    <div class="law-block">
+      <div class="law-label">Your Law</div>
+      <div class="law-text">${r.law}</div>
+    </div>
+    <div class="prescription">${r.prescription}</div>
+    <div class="cta-block">
+      <div class="cta-line">${r.cta}</div>
+      <a href="${BRACELET_URL}" style="text-decoration:none; display:block;">
+        <button class="btn-primary">Get Your Bracelet</button>
+      </a>
+      <div class="share-row">
+        <button class="btn-secondary" onclick="shareResult('${r.title}')">Share Result</button>
+        <button class="btn-secondary" onclick="restart()">Retake</button>
+      </div>
+    </div>
+    <div class="tag-line">Screenshot your result. Tag ${IG_HANDLE} #BeTheReason.<br>Someone else needs to see which excuse is running them too.</div>
+  `;
+  rContainer.appendChild(div);
+});
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function updateProgress() {
+  const pct = (current / questions.length) * 100;
+  progressBar.style.width = pct + '%';
+}
+
+function startQuiz() {
+  current = 0;
+  tally.A = 0; tally.B = 0; tally.C = 0; tally.D = 0;
+  updateProgress();
+  showScreen('screen-q0');
+}
+
+function answer(letter) {
+  tally[letter]++;
+  current++;
+  if (current < questions.length) {
+    updateProgress();
+    showScreen('screen-q' + current);
+  } else {
+    progressBar.style.width = '100%';
+    const winner = Object.keys(tally).reduce((a, b) => tally[a] >= tally[b] ? a : b);
+    showScreen('screen-r' + winner);
+  }
+}
+
+function restart() {
+  progressBar.style.width = '0%';
+  showScreen('screen-intro');
+}
+
+function shareResult(title) {
+  const shareText = `My excuse is "${title}." Which one is running you? Take the diagnostic:`;
+  if (navigator.share) {
+    navigator.share({ title: 'The Excuse Mindset Diagnostic', text: shareText, url: window.location.href })
+      .catch(() => {});
+  } else {
+    navigator.clipboard.writeText(shareText + ' ' + window.location.href);
+    alert('Link copied — paste it into your story.');
+  }
+}
+</script>
+
+</body>
+</html>
