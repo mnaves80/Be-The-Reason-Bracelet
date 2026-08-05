@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Google Tag Manager -->
+    <script>(function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-WFCWQS8B');</script>
+    <!-- End Google Tag Manager -->
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>My Account | Be The Reason</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <meta name="description"
+        content="Daily inspirational quotes to motivate and uplift. Be the reason someone smiles today with our curated collection of positive, life-changing quotes.">
+    <meta name="keywords"
+        content="daily quotes, inspirational quotes, motivational quotes, positive quotes, quote of the day, be the reason quotes, uplifting quotes, life quotes, success quotes, happiness quotes, wisdom quotes, daily inspiration, motivational messages, positive thinking, personal growth quotes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/common/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #0a0a0a;
+            color: #ffffff;
+            font-family: 'Manrope', sans-serif;
+            min-height: 100vh;
+        }
+
+        /* TOP NAV */
+        .dashboard-nav {
+            background: #111111;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 0 40px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-logo {
+            font-size: 20px;
+            font-weight: 800;
+            color: white;
+            text-decoration: none;
+        }
+
+        .nav-logo span {
+            color: #e63946;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-user {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: #e63946;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            font-weight: 700;
+            color: white;
+            overflow: hidden;
+        }
+
+        .nav-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .nav-user-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .btn-logout {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: rgba(255, 255, 255, 0.6);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-family: 'Manrope', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .btn-logout:hover {
+            border-color: #e63946;
+            color: #e63946;
+        }
+
+        .btn-shop {
+            background: #e63946;
+            border: none;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            font-family: 'Manrope', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .btn-shop:hover {
+            background: #c1121f;
+            color: white;
+        }
+
+        /* DASHBOARD LAYOUT */
+        .dashboard-wrapper {
+            display: flex;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            gap: 30px;
+        }
+
+        /* SIDEBAR */
+        .dashboard-sidebar {
+            width: 240px;
+            flex-shrink: 0;
+        }
+
+        .sidebar-menu {
+            background: #111111;
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .sidebar-menu-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 14px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 4px;
+            border: none;
+            background: transparent;
+            width: 100%;
+            text-align: left;
+            font-family: 'Manrope', sans-serif;
+        }
+
+        .sidebar-menu-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+        }
+
+        .sidebar-menu-item.active {
+            background: rgba(230, 57, 70, 0.15);
+            color: #e63946;
+        }
+
+        .sidebar-menu-item .menu-icon {
+            font-size: 18px;
+            width: 24px;
+            text-align: center;
+        }
+
+        /* MAIN CONTENT */
+        .dashboard-main {
+            flex: 1;
+            min-width: 0;
+        }
+
+        /* PANELS */
+        .dashboard-panel {
+            display: none;
+        }
+
+        .dashboard-panel.active {
+            display: block;
+        }
+
+        /* CARDS */
+        .dash-card {
+            background: #111111;
+            border-radius: 16px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            margin-bottom: 20px;
+        }
+
+        .dash-card-title {
+            font-size: 18px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* STATS ROW */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: #111111;
+            border-radius: 14px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: 800;
+            color: #e63946;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* DISCOUNT BADGE */
+        .discount-banner {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(5, 150, 105, 0.15));
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 14px;
+            padding: 20px 25px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .discount-banner-text h3 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #34d399;
+            margin-bottom: 5px;
+        }
+
+        .discount-banner-text p {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .discount-banner-badge {
+            background: #10b981;
+            color: white;
+            font-size: 24px;
+            font-weight: 800;
+            padding: 10px 20px;
+            border-radius: 10px;
+        }
+
+        /* ORDERS */
+        .order-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .order-item:last-child {
+            border-bottom: none;
+        }
+
+        .order-info h4 {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .order-info p {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .order-status {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .order-status.delivered {
+            background: rgba(16, 185, 129, 0.15);
+            color: #34d399;
+        }
+
+        .order-status.processing {
+            background: rgba(251, 191, 36, 0.15);
+            color: #fbbf24;
+        }
+
+        .order-status.shipped {
+            background: rgba(96, 165, 250, 0.15);
+            color: #60a5fa;
+        }
+
+        .order-amount {
+            font-size: 16px;
+            font-weight: 800;
+            color: white;
+        }
+
+        /* EMPTY STATE */
+        .empty-state {
+            text-align: center;
+            padding: 50px 20px;
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .empty-state .empty-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .empty-state p {
+            font-size: 15px;
+            margin-bottom: 20px;
+        }
+
+        /* PROFILE FORM */
+        .profile-form .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .profile-form .form-group {
+            margin-bottom: 15px;
+        }
+
+        .profile-form label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .profile-form input {
+            width: 100%;
+            background: #1a1a1a;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 12px 15px;
+            color: #ffffff;
+            font-size: 14px;
+            font-family: 'Manrope', sans-serif;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .profile-form input:focus {
+            border-color: #e63946;
+            box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.1);
+        }
+
+        .btn-save {
+            background: #e63946;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 12px 30px;
+            font-size: 14px;
+            font-weight: 700;
+            font-family: 'Manrope', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-save:hover {
+            background: #c1121f;
+            transform: translateY(-2px);
+        }
+
+        /* LOADING */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0a0a0a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            border-top-color: #e63946;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .dashboard-wrapper {
+                flex-direction: column;
+            }
+
+            .dashboard-sidebar {
+                width: 100%;
+            }
+
+            .stats-row {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-form .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .dashboard-nav {
+                padding: 0 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Top Navigation -->
+    <nav class="dashboard-nav">
+        <a href="index.html" class="nav-logo">Be <span>The</span> Reason</a>
+        <div class="nav-right">
+            <div class="nav-user">
+                <div class="nav-avatar" id="navAvatar">?</div>
+                <span class="nav-user-name" id="navUserName">Loading...</span>
+            </div>
+            <a href="all-products.html" class="btn-shop">Shop Now</a>
+            <button class="btn-logout" id="logoutBtn">Sign Out</button>
+        </div>
+    </nav>
+
+    <!-- Dashboard -->
+    <div class="dashboard-wrapper">
+
+        <!-- SIDEBAR -->
+        <div class="dashboard-sidebar">
+            <div class="sidebar-menu">
+                <button class="sidebar-menu-item active" onclick="showPanel('overview')">
+                    <span class="menu-icon">🏠</span> Overview
+                </button>
+                <button class="sidebar-menu-item" onclick="showPanel('orders')">
+                    <span class="menu-icon">📦</span> My Orders
+                </button>
+                <button class="sidebar-menu-item" onclick="showPanel('profile')">
+                    <span class="menu-icon">👤</span> Profile
+                </button>
+                <button class="sidebar-menu-item" onclick="showPanel('addresses')">
+                    <span class="menu-icon">📍</span> Addresses
+                </button>
+            </div>
+        </div>
+
+        <!-- MAIN CONTENT -->
+        <div class="dashboard-main">
+
+            <!-- OVERVIEW PANEL -->
+            <div class="dashboard-panel active" id="panel-overview">
+
+                <!-- Discount Banner (shown if eligible) -->
+                <div class="discount-banner" id="discountBanner" style="display:none;">
+                    <div class="discount-banner-text">
+                        <h3>🎉 Your First-Time Discount is Ready!</h3>
+                        <p>You have a 20% discount waiting on your first purchase. Shop now!</p>
+                    </div>
+                    <div class="discount-banner-badge">20% OFF</div>
+                </div>
+
+                <!-- Stats -->
+                <div class="stats-row">
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalOrders">0</div>
+                        <div class="stat-label">Total Orders</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalSpent">$0</div>
+                        <div class="stat-label">Total Spent</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="savedAmount">$0</div>
+                        <div class="stat-label">Total Saved</div>
+                    </div>
+                </div>
+
+                <!-- Recent Orders -->
+                <div class="dash-card">
+                    <div class="dash-card-title">📦 Recent Orders</div>
+                    <div id="recentOrdersList">
+                        <div class="empty-state">
+                            <div class="empty-icon">🛍️</div>
+                            <p>No orders yet. Start shopping!</p>
+                            <a href="all-products.html" class="btn-save"
+                                style="text-decoration:none; display:inline-block;">Shop Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ORDERS PANEL -->
+            <div class="dashboard-panel" id="panel-orders">
+                <div class="dash-card">
+                    <div class="dash-card-title">📦 All Orders</div>
+                    <div id="allOrdersList">
+                        <div class="empty-state">
+                            <div class="empty-icon">📭</div>
+                            <p>No orders found.</p>
+                            <a href="all-products.html" class="btn-save"
+                                style="text-decoration:none; display:inline-block;">Start Shopping</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PROFILE PANEL -->
+            <div class="dashboard-panel" id="panel-profile">
+                <div class="dash-card">
+                    <div class="dash-card-title">👤 Profile Settings</div>
+                    <form class="profile-form" id="profileForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>First Name</label>
+                                <input type="text" id="profileFirstName" placeholder="John">
+                            </div>
+                            <div class="form-group">
+                                <label>Last Name</label>
+                                <input type="text" id="profileLastName" placeholder="Doe">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Email Address</label>
+                            <input type="email" id="profileEmail" placeholder="you@example.com" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label>Phone Number</label>
+                            <input type="tel" id="profilePhone" placeholder="+1 (555) 000-0000">
+                        </div>
+                        <button type="submit" class="btn-save">Save Changes</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- ADDRESSES PANEL -->
+            <div class="dashboard-panel" id="panel-addresses">
+                <div class="dash-card">
+                    <div class="dash-card-title">📍 Saved Addresses</div>
+                    <div class="empty-state">
+                        <div class="empty-icon">📍</div>
+                        <p>No saved addresses yet.</p>
+                        <p style="font-size:13px; margin-top:5px;">Addresses will be saved after your first purchase.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script type="module">
+        import { auth, db } from './assets/js/firebase-config.js';
+        import {
+            onAuthStateChanged,
+            signOut
+        } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import {
+            doc, getDoc, updateDoc, collection, query, where, getDocs
+        } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        let currentUser = null;
+
+        // Check auth state
+        onAuthStateChanged(auth, async (user) => {
+            if (!user) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            currentUser = user;
+            await loadDashboard(user);
+            document.getElementById('loadingOverlay').style.display = 'none';
+        });
+
+        async function loadDashboard(user) {
+            // Set nav user info
+            const name = user.displayName || user.email.split('@')[0];
+            document.getElementById('navUserName').textContent = name;
+
+            // Set avatar
+            const avatar = document.getElementById('navAvatar');
+            if (user.photoURL) {
+                avatar.innerHTML = `<img src="${user.photoURL}" alt="${name}">`;
+            } else {
+                avatar.textContent = name.charAt(0).toUpperCase();
+            }
+
+            // Set profile form
+            document.getElementById('profileEmail').value = user.email;
+            if (user.displayName) {
+                const parts = user.displayName.split(' ');
+                document.getElementById('profileFirstName').value = parts[0] || '';
+                document.getElementById('profileLastName').value = parts.slice(1).join(' ') || '';
+            }
+
+            // Check discount eligibility
+            const hasDiscount = localStorage.getItem('btr_first_purchase_discount') === 'true';
+            if (hasDiscount) {
+                document.getElementById('discountBanner').style.display = 'flex';
+            }
+
+            // Load user data from Firestore
+            try {
+                const userDoc = await getDoc(doc(db, 'users', user.uid));
+                if (userDoc.exists()) {
+                    const data = userDoc.data();
+                    if (data.phone) document.getElementById('profilePhone').value = data.phone;
+
+                    // Check Firestore for discount eligibility too
+                    if (data.discountEligible) {
+                        document.getElementById('discountBanner').style.display = 'flex';
+                    }
+                }
+            } catch (e) {
+                console.log('Error loading user data:', e);
+            }
+
+            // Load orders
+            loadOrders(user.uid);
+        }
+
+        async function loadOrders(uid) {
+            try {
+                const ordersRef = collection(db, 'orders');
+
+                // Query 1: Get orders by userId (logged-in orders + linked guest orders)
+                const q1 = query(ordersRef, where('userId', '==', uid));
+                const querySnapshot1 = await getDocs(q1);
+
+                // Query 2: Get any remaining guest orders by email (in case linking failed)
+                const userEmail = currentUser?.email;
+                let querySnapshot2 = null;
+                if (userEmail) {
+                    const q2 = query(
+                        ordersRef,
+                        where('userEmail', '==', userEmail),
+                        where('isGuest', '==', true)
+                    );
+                    querySnapshot2 = await getDocs(q2);
+                }
+
+                const orders = [];
+                const orderIds = new Set();
+
+                // Add orders from userId query
+                querySnapshot1.forEach((doc) => {
+                    orders.push({ id: doc.id, ...doc.data() });
+                    orderIds.add(doc.id);
+                });
+
+                // Add guest orders by email (avoid duplicates)
+                if (querySnapshot2) {
+                    querySnapshot2.forEach((doc) => {
+                        if (!orderIds.has(doc.id)) {
+                            orders.push({ id: doc.id, ...doc.data() });
+                        }
+                    });
+                }
+
+                // Sort by date (newest first)
+                orders.sort((a, b) => {
+                    const dateA = a.createdAt?.toDate?.() || new Date(0);
+                    const dateB = b.createdAt?.toDate?.() || new Date(0);
+                    return dateB - dateA;
+                });
+
+                // Update stats
+                const totalSpent = orders.reduce((sum, o) => sum + (o.amount || 0), 0);
+                const totalSaved = orders.reduce((sum, o) => sum + (o.discountAmount || 0), 0);
+                document.getElementById('totalOrders').textContent = orders.length;
+                document.getElementById('totalSpent').textContent = `$${totalSpent.toFixed(2)}`;
+                document.getElementById('savedAmount').textContent = `$${totalSaved.toFixed(2)}`;
+
+                if (orders.length > 0) {
+                    renderOrders(orders.slice(0, 5), 'recentOrdersList');
+                    renderOrders(orders, 'allOrdersList');
+                }
+
+                console.log(`✅ Loaded ${orders.length} order(s)`);
+
+            } catch (e) {
+                console.log('Error loading orders:', e);
+            }
+        }
+
+        function renderOrders(orders, containerId) {
+            const container = document.getElementById(containerId);
+            if (!orders.length) return;
+
+            container.innerHTML = orders.map(order => `
+                <div class="order-item">
+                    <div class="order-info">
+                        <h4>Order #${order.stripeSessionId?.slice(-8) || order.id?.slice(-8) || 'N/A'}</h4>
+                        <p>${order.createdAt?.toDate?.()?.toLocaleDateString() || 'Date unavailable'} • ${order.items?.length || 1} item(s)</p>
+                    </div>
+                    <span class="order-status ${order.status || 'processing'}">${(order.status || 'Processing').charAt(0).toUpperCase() + (order.status || 'processing').slice(1)}</span>
+                    <div class="order-amount">$${(order.amount || 0).toFixed(2)}</div>
+                </div>
+            `).join('');
+        }
+
+        // Panel switching
+        window.showPanel = function (panelName) {
+            document.querySelectorAll('.dashboard-panel').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.sidebar-menu-item').forEach(m => m.classList.remove('active'));
+            document.getElementById(`panel-${panelName}`).classList.add('active');
+            event.currentTarget.classList.add('active');
+        };
+
+        // Profile save
+        document.getElementById('profileForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (!currentUser) return;
+
+            const firstName = document.getElementById('profileFirstName').value;
+            const lastName = document.getElementById('profileLastName').value;
+            const phone = document.getElementById('profilePhone').value;
+
+            try {
+                await updateDoc(doc(db, 'users', currentUser.uid), {
+                    displayName: `${firstName} ${lastName}`.trim(),
+                    phone: phone
+                });
+                alert('✅ Profile updated successfully!');
+            } catch (e) {
+                alert('Error saving profile. Please try again.');
+            }
+        });
+
+        // Logout
+        document.getElementById('logoutBtn').addEventListener('click', async () => {
+            await signOut(auth);
+            window.location.href = 'index.html';
+        });
+    </script>
+</body>
+
+</html>

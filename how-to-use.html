@@ -2,6 +2,14 @@
 <html lang="en">
 
 <head>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-WFCWQS8B');</script>
+    <!-- End Google Tag Manager -->
+
     <!--====== Required meta tags ======-->
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -46,6 +54,11 @@
 </head>
 
 <body class="ai-website">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WFCWQS8B"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+     
     <!--====== Start Preloader ======-->
     <div class="preloader">
         <div class="loader">
@@ -64,7 +77,7 @@
                 <div class="primary-menu">
                     <!--====  Site Branding  ===-->
                     <div class="site-branding">
-                        <a href="how-to-use.html" class="brand-logo"><img class="be-logo" width="65" height="65"
+                        <a href="index.html" class="brand-logo"><img class="be-logo" width="65" height="65"
                                 src="assets/images/Be_The_Reason__2_-removebg-preview.png" alt="Brand Logo"></a>
                     </div>
                     <!--=== Sasly Main Menu===-->
@@ -72,7 +85,7 @@
                         <!-- Sasly Menu Top -->
                         <div class="sasly-menu-top d-flex justify-content-between d-block d-lg-none">
                             <div class="site-branding">
-                                <a href="how-to-use.html" class="brand-logo"><img width="65" height="65"
+                                <a href="index.html" class="brand-logo"><img width="65" height="65"
                                         src="assets/images/Be_The_Reason__2_-removebg-preview.png" alt="Brand Logo"></a>
                             </div>
                             <div class="navbar-close">
@@ -84,14 +97,14 @@
                             <ul>
                                 <li class="menu-item"><a href="index.html">Home</a></li>
                                 <li class="menu-item"><a href="about.html">About</a></li>
-                                <li class="menu-item"><a href="https://vt.tiktok.com/ZT6LQQoRh/?page=TikTokShop">Pricing</a></li>
+                                <li class="menu-item"><a href="all-products.html">Shop</a></li>
                                 <li class="menu-item"><a href="how-to-use.html">How To Use</a></li>
                                 <li class="menu-item"><a href="make-money.html">BTR Affiliate</a></li>
                             </ul>
                         </nav>
                         <!--=== Sasly Nav Button ===-->
                         <div class="sasly-nav-button mt-20 d-block d-md-none">
-                            <a href="https://vt.tiktok.com/ZT6LQQoRh/?page=TikTokShop" class="theme-btn style-one">Buy here</a>
+                            <a href="all-products.html" class="theme-btn style-one">Buy here</a>
                         </div>
                         <!--=== Sasly Menu Bottom ===-->
                         <div class="sasly-menu-bottom mt-50 d-block d-lg-none">
@@ -231,6 +244,64 @@
             </footer><!--====== End Footer  ======-->
         </div>
     </div>
+
+    <div class="modal fade" id="emailPopupModal" tabindex="-1" aria-labelledby="emailPopupModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="email-popup-container">
+                    <!-- Close Button -->
+                    <button type="button" class="email-popup-close" data-bs-dismiss="modal" aria-label="Close">
+                        ×
+                    </button>
+
+                    <!-- Header -->
+                    <div class="email-popup-header">
+                        <h2>Welcome to<br>Be The Reason!</h2>
+                        <p>Join our community and get rewarded</p>
+                        <div class="email-popup-discount">20% OFF</div>
+                    </div>
+
+                    <!-- Body with Form -->
+                    <div class="email-popup-body">
+                        <p>
+                            Enter your email and get <strong>20% off your first purchase!</strong>
+                        </p>
+
+                        <form class="email-popup-form" id="emailPopupForm">
+                            <input type="email" class="email-popup-input" id="emailPopupEmail"
+                                placeholder="Your Email Address" required>
+                            <button type="submit" class="email-popup-submit" id="emailPopupSubmit">
+                                Get My 20% Discount
+                            </button>
+                        </form>
+
+                        <p class="email-popup-privacy">
+                            We respect your privacy. Unsubscribe anytime.<br>
+                            By subscribing, you agree to our <a href="#">Privacy Policy</a>.
+                        </p>
+                    </div>
+
+                    <!-- Success Message (Hidden by default) -->
+                    <div class="email-popup-success" id="emailPopupSuccess">
+                        <div class="email-popup-success-icon">✓</div>
+                        <h3>Welcome Aboard! 🎉</h3>
+                        <p>
+                            Thank you for joining Be The Reason!<br>
+                            <strong>Your 20% discount will be automatically applied</strong><br>
+                            at checkout on your first purchase.
+                        </p>
+                        <p style="font-size: 14px; color: #999; margin-top: 15px;">
+                            No code needed - just shop and save!
+                        </p>
+                        <button class="email-popup-success-close" id="emailPopupSuccessClose" data-bs-dismiss="modal">
+                            Start Shopping
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <!--====== Jquery js ======-->
     <script src="assets/js/jquery-3.7.1.min.js"></script>
     <!--====== Bootstrap js ======-->
@@ -255,6 +326,7 @@
     <!--====== Main js ======-->
     <script src="assets/js/theme.js"></script>
 
+    <script src="assets/js/email-popup.js"></script>
 </body>
 
 </html>

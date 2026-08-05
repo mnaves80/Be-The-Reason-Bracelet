@@ -974,7 +974,7 @@ label {
   height: 100%;
   width: 100%;
   background: #151515;
-  z-index: 900;
+  z-index: 2;
   top: 0;
   opacity: 0;
   visibility: hidden;
@@ -1140,8 +1140,12 @@ label {
 
 /*  Header Area */
 .header-area {
-  position: relative;
-  z-index: 9999;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background-color: #000000;
 }
 
 /*  Header Top Bar */
@@ -2024,10 +2028,11 @@ label {
 
 .header-two.sticky {
   top: 0;
+  background-color: #000000;
 }
 
 .header-three.sticky {
-  background-color: #000000;
+  
 }
 
 .header-four .header-navigation.sticky {
