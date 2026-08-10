@@ -1,4 +1,15 @@
 // Cart Management System with First-Time Discount Support and Firebase Integration
+
+// Capture athlete referral code from URL (?ref=CODE) into localStorage
+// so it survives navigation from the landing page to checkout.
+(function captureAthleteCode() {
+    const params = new URLSearchParams(window.location.search);
+    const ref = params.get('ref');
+    if (ref) {
+        localStorage.setItem('btr_athlete_code', ref);
+    }
+})();
+
 class ShoppingCart {
     constructor() {
         this.items = this.loadCart();
@@ -18,7 +29,7 @@ class ShoppingCart {
         try {
             const { auth } = await import('./firebase-config.js');
             const { onAuthStateChanged } = await import("https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js");
-            
+
             onAuthStateChanged(auth, (user) => {
                 this.currentUser = user;
                 console.log('User auth status:', user ? 'Logged in' : 'Guest');
@@ -370,6 +381,9 @@ class ShoppingCart {
             applyDiscount: false
         };
 
+        // Check for athlete referral code (captured earlier from ?ref= in the URL)
+        const athleteCode = localStorage.getItem('btr_athlete_code') || null;
+
         // Prepare metadata for Stripe (includes user info if logged in)
         const metadata = {
             cartItems: JSON.stringify(this.items.map(i => ({ id: i.id, title: i.title, qty: i.quantity }))),
@@ -394,6 +408,7 @@ class ShoppingCart {
             body: JSON.stringify({
                 items: itemsForStripe,
                 discount: discountData,
+                athleteCode: athleteCode,
                 metadata: metadata
             })
         })
@@ -408,7 +423,7 @@ class ShoppingCart {
                 if (discountData.applyDiscount) {
                     localStorage.setItem('btr_discount_pending', 'true');
                 }
-                
+
                 // Redirect to Stripe Checkout
                 window.location.href = data.url;
             })
