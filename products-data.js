@@ -169,6 +169,127 @@ const PRODUCTS = [
         ],
         inStock: true,
         detailPage: 'product-detail-7.html'
+    },
+    {
+        id: 'btr-polar-snowflake-008',
+        title: 'Polar Bears Snowflake Bracelet',
+        price: 20.00,
+        shortDescription: 'Wear the message. Support the mission.',
+        fullDescription: 'The Polar Bears Snowflake Bracelet is more than a way to rep the team — it’s a way to Be The Reason and give back to the next generation. Designed in the signature Polar Bears ice blue, it features repeating BTR lettering and snowflake details inspired by the Kalamazoo Polar Bears, with the bold BE THE REASON message on the reverse side. For every bracelet sold, $5 is donated directly to the Kalamazoo Polar Bears nonprofit organization to help support its mission, athletes, programs, and continued investment in the youth of our community.',
+        sku: 'BTR-POLAR-008',
+        category: 'Bracelets',
+        tags: ['Polar Bears', 'Snowflake', 'Charity', 'Kalamazoo'],
+        images: [
+            'assets/images/product-image/product-8-1.png',
+            'assets/images/product-image/product-8-2.png',
+            'assets/images/product-image/product-8-3.png',
+            'assets/images/product-image/product-8-4.png'
+        ],
+        features: [
+            'Ice-blue Polar Bears colorway',
+            'BTR and snowflake design',
+            'Reversible Be The Reason design',
+            'Comfortable woven stretch material',
+            '$5 donated to the Kalamazoo Polar Bears nonprofit with every bracelet sold'
+        ],
+        inStock: true,
+        detailPage: 'product-detail-8.html'
+    },
+    {
+        id: 'btr-braylen-naves-009',
+        title: 'Braylen Naves x BTR Bracelet',
+        price: 20.00,
+        shortDescription: 'Faith. Family. Football.',
+        fullDescription: 'A signature collaboration built around faith, family, football, and purpose. Designed specifically for Braylen, this bracelet combines his personal football identity with the Be The Reason mindset — featuring a bold maroon and gold colorway, custom Braylen Naves detailing, football-inspired graphics, his #17, and the signature BTR branding. The reverse side carries the BE THE REASON message, a daily reminder that greatness is about having a reason behind the work and representing something bigger than yourself.',
+        sku: 'BTR-BRAYLEN-009',
+        category: 'Bracelets',
+        tags: ['Athlete Collab', 'Braylen Naves', 'Football', 'Faith Family Football'],
+        images: [
+            'assets/images/product-image/product-9-1.png',
+            'assets/images/product-image/product-9-2.png',
+            'assets/images/product-image/product-9-3.png',
+            'assets/images/product-image/product-9-4.png'
+        ],
+        features: [
+            'Maroon and gold colorway',
+            'Custom Braylen Naves detailing with #17',
+            'Reversible Be The Reason design',
+            'Comfortable woven stretch material'
+        ],
+        inStock: true,
+        detailPage: 'product-detail-9.html'
+    },
+    {
+        id: 'btr-chance-sims-010',
+        title: 'Chance Sims x BTR Bracelet',
+        price: 20.00,
+        shortDescription: 'Find Your Reason. Chase Your Purpose.',
+        fullDescription: 'The Chance Sims x BTR Bracelet brings Chance’s personality, style, and competitive mindset together with the Be The Reason message. It features a bold camo-inspired design in green, black, yellow, and orange, with SIMS displayed prominently in bold lettering surrounded by custom BTR details, stars, and athletic-inspired graphics. The reverse side carries the signature BE THE REASON message — a reminder that behind every goal, workout, practice, and game, there has to be a reason that keeps you going.',
+        sku: 'BTR-CHANCE-010',
+        category: 'Bracelets',
+        tags: ['Athlete Collab', 'Chance Sims', 'Football', 'Camo'],
+        images: [
+            'assets/images/product-image/product-10-1.png',
+            'assets/images/product-image/product-10-2.png',
+            'assets/images/product-image/product-10-3.png',
+            'assets/images/product-image/product-10-4.png'
+        ],
+        features: [
+            'Camo-inspired green, black, yellow and orange design',
+            'Bold SIMS lettering with custom BTR details',
+            'Reversible Be The Reason design',
+            'Comfortable woven stretch material'
+        ],
+        inStock: true,
+        detailPage: 'product-detail-10.html'
+    },
+    {
+        id: 'btr-jake-morrow-011',
+        title: 'Jake Morrow x BTR Bracelet',
+        price: 20.00,
+        shortDescription: 'Faith. Family. Football. Be The Reason.',
+        fullDescription: 'A signature athlete collaboration that brings together Jake’s football identity with the mindset and purpose behind Be The Reason. Designed in a bold purple, black, white, and gold colorway, it features Jake’s name, #12, football-inspired details, and the words FAITH. FAMILY. FOOTBALL. The purple sections carry the signature BE THE REASON branding with distressed gold accents — a reminder to have a purpose behind everything you do and keep showing up when the work gets difficult.',
+        sku: 'BTR-JAKE-011',
+        category: 'Bracelets',
+        tags: ['Athlete Collab', 'Jake Morrow', 'Football', 'Faith Family Football'],
+        images: [
+            'assets/images/product-image/product-11-1.png',
+            'assets/images/product-image/product-11-2.png',
+            'assets/images/product-image/product-11-3.png',
+            'assets/images/product-image/product-11-4.png'
+        ],
+        features: [
+            'Purple, black, white and gold colorway',
+            'Custom Jake Morrow detailing with #12',
+            'Reversible Be The Reason design',
+            'Comfortable woven stretch material'
+        ],
+        inStock: true,
+        detailPage: 'product-detail-11.html'
+    },
+    {
+        id: 'btr-jj-douglas-012',
+        title: 'JJ Douglas x BTR Bracelet',
+        price: 20.00,
+        shortDescription: 'Faith. Family. Football. Purpose.',
+        fullDescription: 'The JJ Douglas x BTR Bracelet is built around the things that matter most — faith, family, football, and purpose. It combines a rugged, game-ready look with details inspired by JJ’s journey: bold black, red, and white tones with distressed textures, JJ Douglas’ name and #1, football-inspired graphics, crosses representing faith, and "Family Matters" as a reminder of who you’re doing it all for. The reverse side carries the signature BE THE REASON message — a daily reminder to stay focused, keep working, and finish what you start.',
+        sku: 'BTR-JJDOUGLAS-012',
+        category: 'Bracelets',
+        tags: ['Athlete Collab', 'JJ Douglas', 'Football', 'Faith Family Football'],
+        images: [
+            'assets/images/product-image/product-12-1.png',
+            'assets/images/product-image/product-12-2.png',
+            'assets/images/product-image/product-12-3.png',
+            'assets/images/product-image/product-12-4.png'
+        ],
+        features: [
+            'Black, red and white distressed design',
+            'Custom JJ Douglas detailing with #1',
+            'Reversible Be The Reason design',
+            'Comfortable woven stretch material'
+        ],
+        inStock: true,
+        detailPage: 'product-detail-12.html'
     }
 ];
 
