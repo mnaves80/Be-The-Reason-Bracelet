@@ -420,6 +420,8 @@ const results = {
 // ---- CONFIG: update these before publishing ----
 const BRACELET_URL = "https://www.btrbracelets.com/all-products.html"; // replace with your product page link
 const IG_HANDLE = "@btrbracelets"; // replace with your handle
+const urlParams = new URLSearchParams(window.location.search);
+const refCode = urlParams.get('ref') || '';
 // -------------------------------------------------
 
 let current = 0;
@@ -499,6 +501,15 @@ function answer(letter) {
   } else {
     progressBar.style.width = '100%';
     const winner = Object.keys(tally).reduce((a, b) => tally[a] >= tally[b] ? a : b);
+    fetch('https://btr-backend.vercel.app/log-diagnostic', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+        resultTitle: results[winner].title,
+        resultLetter: winner,
+        refCode: refCode,
+    }),
+}).catch(() => {});
     showScreen('screen-r' + winner);
   }
 }
