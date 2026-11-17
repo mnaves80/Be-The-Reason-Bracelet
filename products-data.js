@@ -47,7 +47,7 @@ const PRODUCTS = [
             'Great for gifting',
             'Size: 180mm x 25mm x 25mm'
         ],
-        inStock: true,
+        inStock: false,
         detailPage: 'product-detail-2.html'
     },
     {
@@ -71,7 +71,7 @@ const PRODUCTS = [
             'Symbol of positivity',
             'Size: 180mm x 25mm x 25mm'
         ],
-        inStock: true,
+        inStock: false,
         detailPage: 'product-detail-3.html'
     },
     {
@@ -143,7 +143,7 @@ const PRODUCTS = [
             'Comfortable everyday wear',
             'Size: 180mm'
         ],
-        inStock: true,
+        inStock: false,
         detailPage: 'product-detail-6.html'
     },
     {
@@ -244,30 +244,6 @@ const PRODUCTS = [
         detailPage: 'product-detail-10.html'
     },
     {
-        id: 'btr-jake-morrow-011',
-        title: 'Jake Morrow x BTR Bracelet',
-        price: 19.99,
-        shortDescription: 'Faith. Family. Football. Be The Reason.',
-        fullDescription: 'A signature athlete collaboration that brings together Jake’s football identity with the mindset and purpose behind Be The Reason. Designed in a bold purple, black, white, and gold colorway, it features Jake’s name, #12, football-inspired details, and the words FAITH. FAMILY. FOOTBALL. The purple sections carry the signature BE THE REASON branding with distressed gold accents — a reminder to have a purpose behind everything you do and keep showing up when the work gets difficult.',
-        sku: 'BTR-JAKE-011',
-        category: 'Bracelets',
-        tags: ['Athlete Collab', 'Jake Morrow', 'Football', 'Faith Family Football'],
-        images: [
-            'assets/images/product-image/product-11-1.png',
-            'assets/images/product-image/product-11-2.png',
-            'assets/images/product-image/product-11-3.png',
-            'assets/images/product-image/product-11-4.png'
-        ],
-        features: [
-            'Purple, black, white and gold colorway',
-            'Custom Jake Morrow detailing with #12',
-            'Reversible Be The Reason design',
-            'Comfortable woven stretch material'
-        ],
-        inStock: true,
-        detailPage: 'product-detail-11.html'
-    },
-    {
         id: 'btr-jj-douglas-012',
         title: 'JJ Douglas x BTR Bracelet',
         price: 19.99,
@@ -288,7 +264,7 @@ const PRODUCTS = [
             'Reversible Be The Reason design',
             'Comfortable woven stretch material'
         ],
-        inStock: false,
+        inStock: true,
         detailPage: 'product-detail-12.html'
     }
 ];
