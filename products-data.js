@@ -288,7 +288,7 @@ const PRODUCTS = [
             'Reversible Be The Reason design',
             'Comfortable woven stretch material'
         ],
-        inStock: true,
+        inStock: false,
         detailPage: 'product-detail-12.html'
     }
 ];
