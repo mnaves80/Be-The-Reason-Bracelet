@@ -52,7 +52,7 @@ class ShoppingCart {
 
     // Add item to cart
     addItem(product) {
-        // Block sold-out products (controlled by inStock in products-data.js)
+        // Block sold-out products (controlled by the Airtable Inventory table)
         if (typeof getProductById === 'function') {
             const catalogItem = getProductById(product.id);
             if (catalogItem && catalogItem.inStock === false) {
@@ -512,12 +512,15 @@ async function applyLiveStock() {
         PRODUCTS.forEach(p => {
             if (typeof data.stock[p.id] === 'number') {
                 p.inStock = data.stock[p.id] > 0;
+                p.stockCount = data.stock[p.id];
             }
         });
     } catch (e) {
         console.log('Live stock unavailable, using products-data.js values');
     }
     applySoldOutButton();
+    // Re-draw the shop grid (all-products page) with the live stock status
+    if (typeof renderProductsGrid === 'function') renderProductsGrid();
 }
 
 document.addEventListener('DOMContentLoaded', () => {
