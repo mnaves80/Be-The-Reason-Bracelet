@@ -52,6 +52,15 @@ class ShoppingCart {
 
     // Add item to cart
     addItem(product) {
+        // Block sold-out products (controlled by inStock in products-data.js)
+        if (typeof getProductById === 'function') {
+            const catalogItem = getProductById(product.id);
+            if (catalogItem && catalogItem.inStock === false) {
+                alert('Sorry, this bracelet is currently sold out.');
+                return;
+            }
+        }
+
         const existingItem = this.items.find(item => item.id === product.id);
 
         if (existingItem) {
@@ -346,6 +355,19 @@ class ShoppingCart {
             return;
         }
 
+        // Remove anything that sold out while it sat in the cart
+        if (typeof getProductById === 'function') {
+            const soldOut = this.items.filter(i => {
+                const p = getProductById(i.id);
+                return p && p.inStock === false;
+            });
+            if (soldOut.length > 0) {
+                soldOut.forEach(i => this.removeItem(i.id));
+                alert('Sorry, ' + soldOut.map(i => i.title).join(', ') + ' just sold out and was removed from your cart.');
+                return;
+            }
+        }
+
         // Get checkout button and show loading state
         const checkoutBtn = document.getElementById('checkoutBtn');
         if (checkoutBtn) {
@@ -447,6 +469,19 @@ class ShoppingCart {
         this.updateCartUI();
     }
 }
+
+// Show "Sold Out" on a product's detail page when inStock is false
+document.addEventListener('DOMContentLoaded', () => {
+    if (typeof getProductById !== 'function' || !window.CURRENT_PRODUCT_ID) return;
+    const product = getProductById(window.CURRENT_PRODUCT_ID);
+    const btn = document.getElementById('addToCartBtn');
+    if (product && product.inStock === false && btn) {
+        btn.disabled = true;
+        btn.textContent = 'Sold Out';
+        btn.style.opacity = '0.5';
+        btn.style.cursor = 'not-allowed';
+    }
+});
 
 // Add notification animations to document
 const cartStyle = document.createElement('style');
