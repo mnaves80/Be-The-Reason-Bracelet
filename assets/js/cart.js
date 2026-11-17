@@ -387,6 +387,7 @@ class ShoppingCart {
 
         // Prepare items for Stripe
         const itemsForStripe = this.items.map(item => ({
+            id: item.id,
             title: item.title,
             price: item.price,
             quantity: item.quantity,
@@ -434,8 +435,18 @@ class ShoppingCart {
                 metadata: metadata
             })
         })
-            .then(response => {
+            .then(async response => {
                 if (!response.ok) {
+                    let stockMessage = null;
+                    try {
+                        const err = await response.json();
+                        if (err && err.error === 'out_of_stock') stockMessage = err.message;
+                    } catch (e) { /* not JSON, fall through */ }
+                    if (stockMessage) {
+                        const stockError = new Error(stockMessage);
+                        stockError.userMessage = stockMessage;
+                        throw stockError;
+                    }
                     throw new Error('Network response was not ok');
                 }
                 return response.json();
@@ -451,7 +462,7 @@ class ShoppingCart {
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert('Something went wrong. Please try again.');
+                alert(error.userMessage || 'Something went wrong. Please try again.');
 
                 // Reset button state
                 if (checkoutBtn) {
@@ -471,16 +482,47 @@ class ShoppingCart {
 }
 
 // Show "Sold Out" on a product's detail page when inStock is false
-document.addEventListener('DOMContentLoaded', () => {
+function applySoldOutButton() {
     if (typeof getProductById !== 'function' || !window.CURRENT_PRODUCT_ID) return;
     const product = getProductById(window.CURRENT_PRODUCT_ID);
     const btn = document.getElementById('addToCartBtn');
-    if (product && product.inStock === false && btn) {
-        btn.disabled = true;
-        btn.textContent = 'Sold Out';
-        btn.style.opacity = '0.5';
-        btn.style.cursor = 'not-allowed';
+    if (product && btn) {
+        if (product.inStock === false) {
+            btn.disabled = true;
+            btn.textContent = 'Sold Out';
+            btn.style.opacity = '0.5';
+            btn.style.cursor = 'not-allowed';
+        } else {
+            btn.disabled = false;
+            btn.style.opacity = '';
+            btn.style.cursor = '';
+        }
     }
+}
+
+// Pull live stock counts from the Airtable Inventory table (via the backend).
+// If it can't be reached, the inStock values in products-data.js are used as a fallback.
+async function applyLiveStock() {
+    if (typeof PRODUCTS === 'undefined') return;
+    try {
+        const resp = await fetch('https://btr-backend.vercel.app/stock');
+        if (!resp.ok) return;
+        const data = await resp.json();
+        if (!data.available) return;
+        PRODUCTS.forEach(p => {
+            if (typeof data.stock[p.id] === 'number') {
+                p.inStock = data.stock[p.id] > 0;
+            }
+        });
+    } catch (e) {
+        console.log('Live stock unavailable, using products-data.js values');
+    }
+    applySoldOutButton();
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    applySoldOutButton();
+    applyLiveStock();
 });
 
 // Add notification animations to document
