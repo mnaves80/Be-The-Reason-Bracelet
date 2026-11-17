@@ -1,667 +1,562 @@
-<!DOCTYPE html>
-<html lang="en">
+// Cart Management System with First-Time Discount Support and Firebase Integration
 
-<head>
-    <!-- TikTok Pixel Code Start -->
-<script>
-!function (w, d, t) {
-  w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script");n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
-  ttq.load('DA0BPGBC77U9J4MARFB0');
-  ttq.page();
-}(window, document, 'ttq');
-</script>
-<!-- TikTok Pixel Code End -->
-    <!-- Meta Pixel Code -->
-<script>
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '1388116076755442');
-fbq('track', 'PageView');
-</script>
-<noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=1388116076755442&ev=PageView&noscript=1"
-/></noscript>
-<!-- End Meta Pixel Code -->
-    <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-WFCWQS8B');</script>
-    <!-- End Google Tag Manager -->
+// Capture athlete referral code from URL (?ref=CODE) into localStorage
+// so it survives navigation from the landing page to checkout.
+(function captureAthleteCode() {
+    const params = new URLSearchParams(window.location.search);
+    const ref = params.get('ref');
+    if (ref) {
+        localStorage.setItem('btr_athlete_code', ref);
+    }
+})();
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shop - BE THE REASON</title>
+class ShoppingCart {
+    constructor() {
+        this.items = this.loadCart();
+        this.currentUser = null;
+        this.init();
+        this.checkAuth();
+    }
 
-    <head>
-        <!--====== Required meta tags ======-->
-        <meta charset="utf-8">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <meta name="description"
-            content="Daily inspirational quotes to motivate and uplift. Be the reason someone smiles today with our curated collection of positive, life-changing quotes.">
-        <meta name="keywords"
-            content="daily quotes, inspirational quotes, motivational quotes, positive quotes, quote of the day, be the reason quotes, uplifting quotes, life quotes, success quotes, happiness quotes, wisdom quotes, daily inspiration, motivational messages, positive thinking, personal growth quotes">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <!--====== Title ======-->
-        <title>Shop | Be The Reason</title>
-        <!--====== Favicon Icon ======-->
-        <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-        <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-        <link rel="manifest" href="site.webmanifest">
-        <!--====== Google Fonts ======-->
-        <link
-            href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap"
-            rel="stylesheet">
-        <!--====== FlatIcon css ======-->
-        <!-- <link rel="stylesheet" href="assets/css/common/flaticon_sasly.css"> -->
-        <!--====== FontAwesome css ======-->
-        <link rel="stylesheet" href="assets/css/common/all.min.css">
-        <!--====== Bootstrap css ======-->
-        <link rel="stylesheet" href="assets/css/common/bootstrap.min.css">
-        <!--====== Slick-popup css ======-->
-        <link rel="stylesheet" href="assets/css/common/slick.css">
-        <!--====== Magnific-popup css ======-->
-        <link rel="stylesheet" href="assets/css/common/magnific-popup.css">
-        <!--====== Animate css ======-->
-        <link rel="stylesheet" href="assets/css/common/aos.css">
-        <!--====== Default css ======-->
-        <link rel="stylesheet" href="assets/css/common/default.css">
-        <!--====== Common Style css ======-->
-        <link rel="stylesheet" href="assets/css/common/common_style.css">
-        <!--====== AnimatedHeadline css ======-->
-        <link rel="stylesheet" href="assets/css/jquery.animatedheadline.css">
-        <!--====== Style css ======-->
-        <link rel="stylesheet" href="assets/css/style.css">
-        <!-- Font Awesome CDN -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    </head>
-    <style>
-        /* Shop Page Styles */
-        .shop-section {
-            padding: 80px 0;
-            background-color: #000000;
-            min-height: 100vh;
-        }
+    init() {
+        this.updateCartCount();
+        this.updateCartUI();
+        this.attachEventListeners();
+    }
 
-        @media screen and (max-width:768px) {
-            .shop-section {
-                padding: 34px 0;
-            }
-        }
+    // Check if user is logged in (optional - cart works without login)
+    async checkAuth() {
+        try {
+            const { auth } = await import('./firebase-config.js');
+            const { onAuthStateChanged } = await import("https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js");
 
-        .shop-header {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-
-        .shop-header h1 {
-            font-size: 48px;
-            font-weight: 700;
-            color: #ffffff;
-            margin-bottom: 15px;
-        }
-
-        .shop-header p {
-            font-size: 18px;
-            color: #999;
-        }
-
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 30px;
-            margin-bottom: 60px;
-        }
-
-        .product-card {
-            background-color: #1a1a1a;
-            border-radius: 16px;
-            overflow: hidden;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-        }
-
-        .product-card:hover {
-            transform: translateY(-8px);
-            border-color: #e63946;
-            box-shadow: 0 12px 30px rgba(230, 57, 70, 0.3);
-        }
-
-        .product-image {
-            position: relative;
-            width: 100%;
-            aspect-ratio: 1;
-            background-color: #f5f5f5;
-            overflow: hidden;
-        }
-
-        .product-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.3s ease;
-        }
-
-        .product-card:hover .product-image img {
-            transform: scale(1.1);
-        }
-
-        .product-badge {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background-color: #e63946;
-            color: #ffffff;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-        }
-
-        .product-info {
-            padding: 25px;
-        }
-
-        .product-category {
-            font-size: 12px;
-            text-transform: uppercase;
-            color: #e63946;
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-
-        .product-title {
-            font-size: 20px;
-            font-weight: 700;
-            color: #ffffff;
-            margin-bottom: 10px;
-            line-height: 1.3;
-        }
-
-        .product-description {
-            font-size: 14px;
-            color: #999;
-            margin-bottom: 15px;
-            line-height: 1.6;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        .product-price {
-            font-size: 28px;
-            font-weight: 700;
-            color: #e63946;
-            margin-bottom: 20px;
-        }
-
-        .product-actions {
-            display: flex;
-            gap: 10px;
-        }
-
-        .btn-add-cart {
-            flex: 1;
-            background-color: #e63946;
-            color: #ffffff;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .btn-add-cart:hover {
-            background-color: #d62839;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(230, 57, 70, 0.4);
-        }
-
-        .btn-view-details {
-            background-color: transparent;
-            color: #ffffff;
-            border: 2px solid #333;
-            padding: 12px 20px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .btn-view-details:hover {
-            border-color: #ffffff;
-            background-color: rgba(255, 255, 255, 0.05);
-        }
-
-        .out-of-stock {
-            opacity: 0.6;
-        }
-
-        .out-of-stock .btn-add-cart {
-            background-color: #666;
-            cursor: not-allowed;
-        }
-
-        .out-of-stock .btn-add-cart:hover {
-            transform: none;
-            box-shadow: none;
-        }
-
-        @media (max-width: 768px) {
-            .products-grid {
-                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-                gap: 20px;
-            }
-
-            .shop-header h1 {
-                font-size: 36px;
-            }
-        }
-
-
-        @media screen and (min-width:992px) {
-            .products-break {
-                display: none;
-            }
-        }
-    </style>
-</head>
-
-<body class="ai-website">
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WFCWQS8B"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
-
-    <!--====== Start Preloader ======-->
-    <div class="preloader">
-        <div class="loader">
-            <img width="110" height="110" src="assets/images/Be_The_Reason__2_-removebg-preview.png" alt="Brand Logo">
-        </div>
-    </div>
-    <!--====== End Preloader ======-->
-    <!--====== Start Overlay ======-->
-    <div class="offcanvas__overlay"></div>
-    <!--====== Start Header Area  ======-->
-    <!--====== Start Header Area  ======-->
-    <header class="header-area header-three shop-header">
-        <!--====  Header Navigation  ===-->
-        <div class="header-navigation">
-            <!--====  Header Nav Inner  ===-->
-            <div class="nav-inner-menu">
-                <!--====  Primary Menu  ===-->
-                <div class="primary-menu">
-                    <!--====  Site Branding  ===-->
-                    <div class="site-branding">
-                        <a href="index.html" class="brand-logo"><img class="be-logo" width="65" height="65"
-                                src="assets/images/Be_The_Reason__2_-removebg-preview.png" alt="Brand Logo"></a>
-                    </div>
-                    <!--=== Sasly Main Menu===-->
-                    <div class="sasly-nav-menu">
-                        <!-- Sasly Menu Top -->
-                        <div class="sasly-menu-top d-flex justify-content-between d-block d-lg-none">
-                            <div class="site-branding">
-                                <a href="index.html" class="brand-logo"><img width="65" height="65"
-                                        src="assets/images/Be_The_Reason__2_-removebg-preview.png" alt="Brand Logo"></a>
-                            </div>
-                            <div class="navbar-close">
-                                <i class="fas fa-times"></i>
-                            </div>
-                        </div>
-                        <!--=== Main Menu ===-->
-                        <nav class="main-menu">
-                            <ul>
-                                <li class="menu-item"><a href="index.html">Home</a></li>
-                                <li class="menu-item"><a href="about.html">About</a></li>
-                                <li class="menu-item"><a href="all-products.html">Shop</a></li>
-                                <li class="menu-item"><a href="how-to-use.html">How To Use</a></li>
-                                <li class="menu-item"><a href="make-money.html">BTR Affiliate</a></li>
-                            </ul>
-                        </nav>
-                        <!--=== Sasly Nav Button ===-->
-                        <div class="sasly-nav-button mt-20 d-block d-md-none">
-                            <a href="signup.html" class="theme-btn style-one"> <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" x="0" y="0" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512" xml:space="preserve" class=""><g><path d="M437.02 74.98C388.668 26.63 324.379 0 256 0S123.332 26.629 74.98 74.98C26.63 123.332 0 187.621 0 256s26.629 132.668 74.98 181.02C123.332 485.37 187.621 512 256 512s132.668-26.629 181.02-74.98C485.37 388.668 512 324.379 512 256s-26.629-132.668-74.98-181.02zM111.105 429.297c8.454-72.735 70.989-128.89 144.895-128.89 38.96 0 75.598 15.179 103.156 42.734 23.281 23.285 37.965 53.687 41.742 86.152C361.641 462.172 311.094 482 256 482s-105.637-19.824-144.895-52.703zM256 269.507c-42.871 0-77.754-34.882-77.754-77.753C178.246 148.879 213.13 114 256 114s77.754 34.879 77.754 77.754c0 42.871-34.883 77.754-77.754 77.754zm170.719 134.427a175.9 175.9 0 0 0-46.352-82.004c-18.437-18.438-40.25-32.27-64.039-40.938 28.598-19.394 47.426-52.16 47.426-89.238C363.754 132.34 315.414 84 256 84s-107.754 48.34-107.754 107.754c0 37.098 18.844 69.875 47.465 89.266-21.887 7.976-42.14 20.308-59.566 36.542-25.235 23.5-42.758 53.465-50.883 86.348C50.852 364.242 30 312.512 30 256 30 131.383 131.383 30 256 30s226 101.383 226 226c0 56.523-20.86 108.266-55.281 147.934zm0 0" fill="#ffffff" opacity="1" data-original="#000000" class=""></path></g></svg></a>
-                        </div>
-                        <!--=== Sasly Menu Bottom ===-->
-                        <div class="sasly-menu-bottom mt-50 d-block d-lg-none">
-                            <h5>Follow Us</h5>
-                            <ul class="social-link">
-                                <li><a href="https://www.instagram.com/btrbracelets?igsh=emowc2VqbG9sM2hj&utm_source=qr"
-                                        aria-label="instagram" target="_blank"><i class="fab fa-instagram"></i></a></li>
-                                <li><a href="https://www.youtube.com/@BTRBracelets" aria-label="youtube"
-                                        target="_blank"><i class="fab fa-youtube"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!--=== Header Nav Right ===-->
-                    <div class="nav-right-item">
-                        <button class="cart-toggle" id="cartToggle">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <path d="M9 2L7 6H3L6 20H18L21 6H17L15 2H9Z" />
-                                <circle cx="9" cy="20" r="1" />
-                                <circle cx="15" cy="20" r="1" />
-                            </svg>
-                            <span class="cart-count" id="cartCount">0</span>
-                        </button>
-                        <div class="nav-button d-none d-md-block">
-                            <a href="signup.html" class="theme-btn style-two">
-                                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" x="0" y="0" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512" xml:space="preserve" class=""><g><path d="M437.02 74.98C388.668 26.63 324.379 0 256 0S123.332 26.629 74.98 74.98C26.63 123.332 0 187.621 0 256s26.629 132.668 74.98 181.02C123.332 485.37 187.621 512 256 512s132.668-26.629 181.02-74.98C485.37 388.668 512 324.379 512 256s-26.629-132.668-74.98-181.02zM111.105 429.297c8.454-72.735 70.989-128.89 144.895-128.89 38.96 0 75.598 15.179 103.156 42.734 23.281 23.285 37.965 53.687 41.742 86.152C361.641 462.172 311.094 482 256 482s-105.637-19.824-144.895-52.703zM256 269.507c-42.871 0-77.754-34.882-77.754-77.753C178.246 148.879 213.13 114 256 114s77.754 34.879 77.754 77.754c0 42.871-34.883 77.754-77.754 77.754zm170.719 134.427a175.9 175.9 0 0 0-46.352-82.004c-18.437-18.438-40.25-32.27-64.039-40.938 28.598-19.394 47.426-52.16 47.426-89.238C363.754 132.34 315.414 84 256 84s-107.754 48.34-107.754 107.754c0 37.098 18.844 69.875 47.465 89.266-21.887 7.976-42.14 20.308-59.566 36.542-25.235 23.5-42.758 53.465-50.883 86.348C50.852 364.242 30 312.512 30 256 30 131.383 131.383 30 256 30s226 101.383 226 226c0 56.523-20.86 108.266-55.281 147.934zm0 0" fill="#ffffff" opacity="1" data-original="#000000" class=""></path></g></svg>
-                            </a>
-                        </div>
-                        <div class="navbar-toggler">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header><!--====== End Header Area  ======-->
-    <!--====== End Header Area  ======-->
-    <main class="pt-100" id="smooth-content">
-        <!-- Shop Section -->
-        <section class="shop-section">
-            <div class="container">
-                <div class="shop-header">
-                    <h1>Our Products</h1>
-                    <p>Choose from our collection of premium <br class="products-break">BE THE REASON bracelets</p>
-                </div>
-                <!-- Products Grid (Generated by JavaScript) -->
-                <div class="products-grid" id="productsGrid">
-                    <!-- Products will be inserted here -->
-                </div>
-            </div>
-        </section>
-
-        <!--=== Footer Area ===-->
-        <footer class="ai-footer">
-            <!--=== Footer Widget Area ===-->
-            <div class="footer-widget-area pt-90 pb-20">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-3 col-sm-6 order-lg-1">
-                            <!--=== Footer Widget ===-->
-                            <div class="footer-widget footer-about-widget mb-40" data-aos="fade-up"
-                                data-aos-duration="1200">
-                                <div class="footer-content">
-                                    <div class="footer-logo">
-                                        <a href="index.html">
-                                            <img class="be-logo" width="65" height="65"
-                                                src="assets/images/Be_The_Reason__2_-removebg-preview.png"
-                                                alt="Brand Logo">
-                                        </a>
-                                    </div>
-                                    <p>
-                                        Inspire daily with uplifting quotes that spark smiles and brighten lives.
-                                    </p>
-                                    <ul class="social-link">
-                                        <li>
-                                            <a href="https://www.instagram.com/btrbracelets?igsh=emowc2VqbG9sM2hj&utm_source=qr"
-                                                target="_blank" aria-label="instagram">
-                                                <i class="fab fa-instagram"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="https://www.youtube.com/@BTRBracelets" target="_blank"
-                                                aria-label="youtube">
-                                                <i class="fab fa-youtube"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-5 col-sm-12 order-lg-2 order-sm-3">
-                            <!--=== Footer Widget ===-->
-                            <div class="footer-widget footer-nav-widget mb-40" data-aos="fade-up"
-                                data-aos-duration="1500">
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <div class="footer-content mb-25">
-                                            <h4 class="widget-title">Locations</h4>
-                                            <p>Kalamazoo, MI</p>
-                                        </div>
-                                        <div class="footer-content">
-                                            <h4 class="widget-title">Get In Touch</h4>
-                                            <p>
-                                                <a href="mailto:btrbracelets@gmail.com">btrbracelets@gmail.com</a>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--=== Footer Copyright ===-->
-            <div class="footer-copyright">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="copyright-text">
-                                <p>&copy; 2025
-                                    <span>Be The Reason</span> - All rights reserved.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </footer>
-        <!--====== End Footer  ======-->
-    </main>
-    <!-- Cart Sidebar -->
-    <div class="cart-sidebar" id="cartSidebar">
-        <div class="cart-overlay" id="cartOverlay"></div>
-        <div class="cart-panel">
-            <div class="cart-header">
-                <h2>Shopping Cart</h2>
-                <button class="cart-close" id="cartClose">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <line x1="18" y1="6" x2="6" y2="18" />
-                        <line x1="6" y1="6" x2="18" y2="18" />
-                    </svg>
-                </button>
-            </div>
-            <div class="cart-items" id="cartItems">
-                <!-- Cart items will be inserted here dynamically -->
-            </div>
-            <div class="cart-footer">
-                <!-- Discount Line (will be shown/hidden by JavaScript) -->
-                <div class="cart-discount" id="cart-discount-line" style="display: none;">
-                    <span>Discount (20%) Applied</span>
-                    <span class="discount-amount" id="discountAmount">-$0.00</span>
-                </div>
-                <div class="cart-subtotal">
-                    <span>Subtotal:</span>
-                    <span class="subtotal-amount" id="subtotalAmount">$0.00</span>
-                </div>
-                <button class="btn-checkout" id="checkoutBtn">
-                    Proceed to Checkout
-                </button>
-                <button class="btn-continue-shopping" id="continueShoppingBtn">
-                    Continue Shopping
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="emailPopupModal" tabindex="-1" aria-labelledby="emailPopupModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="email-popup-container">
-                    <!-- Close Button -->
-                    <button type="button" class="email-popup-close" data-bs-dismiss="modal" aria-label="Close">
-                        ×
-                    </button>
-
-                    <!-- Header -->
-                    <div class="email-popup-header">
-                        <h2>Welcome to<br>Be The Reason!</h2>
-                        <p>Join our community and get rewarded</p>
-                        <div class="email-popup-discount">20% OFF</div>
-                    </div>
-
-                    <!-- Body with Form -->
-                    <div class="email-popup-body">
-                        <p>
-                            Enter your email and get <strong>20% off your first purchase!</strong>
-                        </p>
-
-                        <form class="email-popup-form" id="emailPopupForm">
-                            <input type="email" class="email-popup-input" id="emailPopupEmail"
-                                placeholder="Your Email Address" required>
-                            <button type="submit" class="email-popup-submit" id="emailPopupSubmit">
-                                Get My 20% Discount
-                            </button>
-                        </form>
-
-                        <p class="email-popup-privacy">
-                            We respect your privacy. Unsubscribe anytime.<br>
-                            By subscribing, you agree to our <a href="#">Privacy Policy</a>.
-                        </p>
-                    </div>
-
-                    <!-- Success Message (Hidden by default) -->
-                    <div class="email-popup-success" id="emailPopupSuccess">
-                        <div class="email-popup-success-icon">✓</div>
-                        <h3>Welcome Aboard! 🎉</h3>
-                        <p>
-                            Thank you for joining Be The Reason!<br>
-                            <strong>Your 20% discount will be automatically applied</strong><br>
-                            at checkout on your first purchase.
-                        </p>
-                        <p style="font-size: 14px; color: #999; margin-top: 15px;">
-                            No code needed - just shop and save!
-                        </p>
-                        <button class="email-popup-success-close" id="emailPopupSuccessClose" data-bs-dismiss="modal">
-                            Start Shopping
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // Generate products grid
-        document.addEventListener('DOMContentLoaded', () => {
-            const productsGrid = document.getElementById('productsGrid');
-            const products = getAllProducts();
-
-            products.forEach(product => {
-                const productCard = createProductCard(product);
-                productsGrid.appendChild(productCard);
+            onAuthStateChanged(auth, (user) => {
+                this.currentUser = user;
+                console.log('User auth status:', user ? 'Logged in' : 'Guest');
             });
-        });
-
-        // Create product card
-        function createProductCard(product) {
-            const card = document.createElement('div');
-            card.className = `product-card ${!product.inStock ? 'out-of-stock' : ''}`;
-
-            card.innerHTML = `
-                <div class="product-image">
-                    <img src="${product.images[0]}" alt="${product.title}" onerror="this.src='assets/images/placeholder.jpg'">
-                    ${product.inStock ? '<span class="product-badge">In Stock</span>' : '<span class="product-badge" style="background-color: #666;">Out of Stock</span>'}
-                </div>
-                <div class="product-info">
-                    <div class="product-category">${product.category}</div>
-                    <h3 class="product-title">${product.title}</h3>
-                    <p class="product-description">${product.shortDescription}</p>
-                    <div class="product-price">$${product.price.toFixed(2)}</div>
-                    <div class="product-actions">
-                        <button class="btn-add-cart" onclick="quickAddToCart('${product.id}')" ${!product.inStock ? 'disabled' : ''}>
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M9 2L7 6H3L6 20H18L21 6H17L15 2H9Z"/>
-                            </svg>
-                            ${product.inStock ? 'Add to Cart' : 'Out of Stock'}
-                        </button>
-                        <a href="${product.detailPage}" class="btn-view-details">View</a>
-                    </div>
-                </div>
-            `;
-
-            return card;
+        } catch (e) {
+            console.log('Firebase not loaded, continuing as guest');
         }
+    }
 
-        // Quick add to cart (quantity = 1)
-        function quickAddToCart(productId) {
-            const product = getProductById(productId);
+    // Load cart from localStorage
+    loadCart() {
+        const savedCart = localStorage.getItem('btr_cart');
+        return savedCart ? JSON.parse(savedCart) : [];
+    }
 
-            if (!product || !product.inStock) {
-                alert('This product is currently unavailable.');
+    // Save cart to localStorage
+    saveCart() {
+        localStorage.setItem('btr_cart', JSON.stringify(this.items));
+    }
+
+    // Add item to cart
+    addItem(product) {
+        // Block sold-out products (controlled by the Airtable Inventory table)
+        if (typeof getProductById === 'function') {
+            const catalogItem = getProductById(product.id);
+            if (catalogItem && catalogItem.inStock === false) {
+                alert('Sorry, this bracelet is currently sold out.');
                 return;
             }
+        }
 
-            const cartItem = {
-                id: product.id,
-                title: product.title,
-                price: product.price,
-                image: product.images[0],
-                quantity: 1
-            };
+        const existingItem = this.items.find(item => item.id === product.id);
 
-            if (typeof cart !== 'undefined') {
-                cart.addItem(cartItem);
-                cart.openCart();
+        if (existingItem) {
+            existingItem.quantity += product.quantity;
+        } else {
+            this.items.push(product);
+        }
+
+        this.saveCart();
+        this.updateCartCount();
+        this.updateCartUI();
+        this.showNotification('Item added to cart!');
+    }
+
+    // Remove item from cart
+    removeItem(productId) {
+        this.items = this.items.filter(item => item.id !== productId);
+        this.saveCart();
+        this.updateCartCount();
+        this.updateCartUI();
+    }
+
+    // Update item quantity
+    updateQuantity(productId, newQuantity) {
+        const item = this.items.find(item => item.id === productId);
+
+        if (item) {
+            if (newQuantity <= 0) {
+                this.removeItem(productId);
             } else {
-                console.error('Cart system not loaded');
-                alert('Unable to add to cart. Please refresh the page.');
+                item.quantity = newQuantity;
+                this.saveCart();
+                this.updateCartUI();
+                this.updateCartCount();
             }
         }
-    </script>
-    <!--====== Jquery js ======-->
-    <script src="assets/js/jquery-3.7.1.min.js"></script>
-    <!--====== Bootstrap js ======-->
-    <script src="assets/js/popper.min.js"></script>
-    <!--====== Bootstrap js ======-->
-    <script src="assets/js/bootstrap.min.js"></script>
-    <!--====== Gsap Js ======-->
-    <script src="assets/js/gsap.min.js"></script>
-    <script src="assets/js/SplitText.min.js"></script>
-    <script src="assets/js/ScrollSmoother.min.js"></script>
-    <script src="assets/js/ScrollTrigger.min.js"></script>
-    <!--====== Aos js ======-->
-    <script src="assets/js/aos.js"></script>
-    <!--====== Common js ======-->
-    <script src="assets/js/common_script.js"></script>
-    <!--====== Animated Headline js ======-->
-    <script src="assets/js/jquery.animatedheadline.js"></script>
-    <!--====== Main js ======-->
-    <script src="assets/js/theme.js"></script>
+    }
 
-    <!-- Scripts -->
-    <script src="products-data.js"></script>
-    <script src="assets/js/cart.js"></script>
-    <script src="assets/js/email-popup.js"></script>
-    <script src="assets/js/discount-manager.js"></script>
+    // Get cart total
+    getTotal() {
+        return this.items.reduce((total, item) => {
+            return total + (item.price * item.quantity);
+        }, 0);
+    }
 
-</body>
+    // Get total items count
+    getTotalItems() {
+        return this.items.reduce((total, item) => total + item.quantity, 0);
+    }
 
-</html>
+    // Check if user is eligible for first-time discount
+    isEligibleForDiscount() {
+        return localStorage.getItem('btr_first_purchase_discount') === 'true';
+    }
+
+    // Calculate discount amount
+    calculateDiscount(total) {
+        if (!this.isEligibleForDiscount()) {
+            return 0;
+        }
+        return (total * 20) / 100; // 20% discount
+    }
+
+    // Get final total after discount
+    getFinalTotal() {
+        const subtotal = this.getTotal();
+        const discount = this.calculateDiscount(subtotal);
+        return subtotal - discount;
+    }
+
+    // Update cart count badge
+    updateCartCount() {
+        const cartCountElement = document.getElementById('cartCount');
+        if (cartCountElement) {
+            const count = this.getTotalItems();
+            cartCountElement.textContent = count;
+            cartCountElement.style.display = count > 0 ? 'flex' : 'none';
+        }
+    }
+
+    // Update cart UI
+    updateCartUI() {
+        const cartItemsContainer = document.getElementById('cartItems');
+        const subtotalElement = document.getElementById('subtotalAmount');
+
+        if (!cartItemsContainer) return;
+
+        // Clear existing items
+        cartItemsContainer.innerHTML = '';
+
+        if (this.items.length === 0) {
+            cartItemsContainer.innerHTML = `
+                <div class="empty-cart">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 2L7 6H3L6 20H18L21 6H17L15 2H9Z"/>
+                        <circle cx="9" cy="20" r="1"/>
+                        <circle cx="15" cy="20" r="1"/>
+                    </svg>
+                    <p>Your cart is empty</p>
+                    <small>Add some items to get started</small>
+                </div>
+            `;
+        } else {
+            this.items.forEach(item => {
+                const cartItem = this.createCartItemElement(item);
+                cartItemsContainer.appendChild(cartItem);
+            });
+        }
+
+        // Update subtotal and discount
+        if (subtotalElement) {
+            const subtotal = this.getTotal();
+            subtotalElement.textContent = `$${subtotal.toFixed(2)}`;
+
+            // Show discount if eligible
+            this.updateDiscountDisplay(subtotal);
+        }
+    }
+
+    // Update discount display in cart
+    updateDiscountDisplay(subtotal) {
+        const discountLine = document.getElementById('cart-discount-line');
+        const discountAmount = document.getElementById('discountAmount');
+        const subtotalElement = document.getElementById('subtotalAmount');
+
+        if (!this.isEligibleForDiscount()) {
+            // Hide discount line
+            if (discountLine) discountLine.style.display = 'none';
+            // Subtotal shows original price
+            if (subtotalElement) {
+                subtotalElement.textContent = `$${subtotal.toFixed(2)}`;
+            }
+            return;
+        }
+
+        const discount = this.calculateDiscount(subtotal);
+        const finalTotal = subtotal - discount;
+
+        // Show and update discount line
+        if (discountLine) {
+            discountLine.style.display = 'flex';
+            if (discountAmount) {
+                discountAmount.textContent = `-$${discount.toFixed(2)}`;
+            }
+        }
+
+        // Update subtotal to show FINAL PRICE (after discount)
+        if (subtotalElement) {
+            subtotalElement.textContent = `$${finalTotal.toFixed(2)}`;
+        }
+    }
+
+    // Create cart item element
+    createCartItemElement(item) {
+        const cartItem = document.createElement('div');
+        cartItem.className = 'cart-item';
+        cartItem.innerHTML = `
+            <div class="cart-item-image">
+                <img src="${item.image}" alt="${item.title}">
+            </div>
+            <div class="cart-item-details">
+                <div class="cart-item-title">${item.title}</div>
+                <div class="cart-item-price">$${item.price.toFixed(2)}</div>
+                <div class="cart-item-quantity">
+                    <button class="cart-qty-btn decrease" data-id="${item.id}">-</button>
+                    <span class="cart-item-qty">${item.quantity}</span>
+                    <button class="cart-qty-btn increase" data-id="${item.id}">+</button>
+                </div>
+            </div>
+            <button class="cart-item-remove" data-id="${item.id}">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"/>
+                    <line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+            </button>
+        `;
+
+        // Attach event listeners
+        const decreaseBtn = cartItem.querySelector('.decrease');
+        const increaseBtn = cartItem.querySelector('.increase');
+        const removeBtn = cartItem.querySelector('.cart-item-remove');
+
+        decreaseBtn.addEventListener('click', () => {
+            this.updateQuantity(item.id, item.quantity - 1);
+        });
+
+        increaseBtn.addEventListener('click', () => {
+            this.updateQuantity(item.id, item.quantity + 1);
+        });
+
+        removeBtn.addEventListener('click', () => {
+            this.removeItem(item.id);
+        });
+
+        return cartItem;
+    }
+
+    // Show notification
+    showNotification(message) {
+        // Create notification element
+        const notification = document.createElement('div');
+        notification.className = 'cart-notification';
+        notification.textContent = message;
+        notification.style.cssText = `
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background-color: #e63946;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            z-index: 10000;
+            animation: slideInNotification 0.3s ease;
+        `;
+
+        document.body.appendChild(notification);
+
+        // Remove after 3 seconds
+        setTimeout(() => {
+            notification.style.animation = 'slideOutNotification 0.3s ease';
+            setTimeout(() => {
+                notification.remove();
+            }, 300);
+        }, 3000);
+    }
+
+    // Attach event listeners
+    attachEventListeners() {
+        // Cart toggle
+        const cartToggle = document.getElementById('cartToggle');
+        const cartSidebar = document.getElementById('cartSidebar');
+        const cartClose = document.getElementById('cartClose');
+        const cartOverlay = document.getElementById('cartOverlay');
+        const continueShoppingBtn = document.getElementById('continueShoppingBtn');
+
+        if (cartToggle) {
+            cartToggle.addEventListener('click', () => {
+                this.openCart();
+            });
+        }
+
+        if (cartClose) {
+            cartClose.addEventListener('click', () => {
+                this.closeCart();
+            });
+        }
+
+        if (cartOverlay) {
+            cartOverlay.addEventListener('click', () => {
+                this.closeCart();
+            });
+        }
+
+        if (continueShoppingBtn) {
+            continueShoppingBtn.addEventListener('click', () => {
+                this.closeCart();
+            });
+        }
+
+        // Checkout button
+        const checkoutBtn = document.getElementById('checkoutBtn');
+        if (checkoutBtn) {
+            checkoutBtn.addEventListener('click', () => {
+                this.checkout();
+            });
+        }
+    }
+
+    // Open cart sidebar
+    openCart() {
+        const cartSidebar = document.getElementById('cartSidebar');
+        if (cartSidebar) {
+            cartSidebar.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+    }
+
+    // Close cart sidebar
+    closeCart() {
+        const cartSidebar = document.getElementById('cartSidebar');
+        if (cartSidebar) {
+            cartSidebar.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    }
+
+    // Checkout with discount support and Firebase integration
+    checkout() {
+        if (this.items.length === 0) {
+            alert('Your cart is empty!');
+            return;
+        }
+
+        // Remove anything that sold out while it sat in the cart
+        if (typeof getProductById === 'function') {
+            const soldOut = this.items.filter(i => {
+                const p = getProductById(i.id);
+                return p && p.inStock === false;
+            });
+            if (soldOut.length > 0) {
+                soldOut.forEach(i => this.removeItem(i.id));
+                alert('Sorry, ' + soldOut.map(i => i.title).join(', ') + ' just sold out and was removed from your cart.');
+                return;
+            }
+        }
+
+        // Get checkout button and show loading state
+        const checkoutBtn = document.getElementById('checkoutBtn');
+        if (checkoutBtn) {
+            checkoutBtn.textContent = 'Processing...';
+            checkoutBtn.disabled = true;
+        }
+
+        const subtotal = this.getTotal();
+        const discount = this.calculateDiscount(subtotal);
+        const finalTotal = subtotal - discount;
+
+        // Store order info for success page
+        localStorage.setItem('btr_order_subtotal', subtotal.toFixed(2));
+        localStorage.setItem('btr_order_discount', discount.toFixed(2));
+        localStorage.setItem('btr_order_total', finalTotal.toFixed(2));
+        localStorage.setItem('btr_order_items', JSON.stringify(this.items));
+
+        // Prepare items for Stripe
+        const itemsForStripe = this.items.map(item => ({
+            id: item.id,
+            title: item.title,
+            price: item.price,
+            quantity: item.quantity,
+            image: item.image,
+            description: `BE THE REASON ${item.title}`
+        }));
+
+        // Check for first-time discount
+        const discountData = this.isEligibleForDiscount() ? {
+            applyDiscount: true,
+            discountPercentage: 20,
+            subscriberEmail: localStorage.getItem('btr_subscriber_email')
+        } : {
+            applyDiscount: false
+        };
+
+        // Check for athlete referral code (captured earlier from ?ref= in the URL)
+        const athleteCode = localStorage.getItem('btr_athlete_code') || null;
+
+        // Prepare metadata for Stripe (includes user info if logged in)
+        const metadata = {
+            cartItems: JSON.stringify(this.items.map(i => ({ id: i.id, title: i.title, qty: i.quantity }))),
+            discountApplied: discountData.applyDiscount.toString(),
+            subtotal: subtotal.toFixed(2),
+            discountAmount: discount.toFixed(2)
+        };
+
+        // Add user info if logged in
+        if (this.currentUser) {
+            metadata.userId = this.currentUser.uid;
+            metadata.userEmail = this.currentUser.email;
+            metadata.userName = this.currentUser.displayName || 'Guest';
+        }
+
+        // Send to backend to create Stripe checkout session
+        fetch('https://btr-backend.vercel.app/create-checkout-session', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                items: itemsForStripe,
+                discount: discountData,
+                athleteCode: athleteCode,
+                metadata: metadata
+            })
+        })
+            .then(async response => {
+                if (!response.ok) {
+                    let stockMessage = null;
+                    try {
+                        const err = await response.json();
+                        if (err && err.error === 'out_of_stock') stockMessage = err.message;
+                    } catch (e) { /* not JSON, fall through */ }
+                    if (stockMessage) {
+                        const stockError = new Error(stockMessage);
+                        stockError.userMessage = stockMessage;
+                        throw stockError;
+                    }
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Mark discount as pending if applied
+                if (discountData.applyDiscount) {
+                    localStorage.setItem('btr_discount_pending', 'true');
+                }
+
+                // Redirect to Stripe Checkout
+                window.location.href = data.url;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert(error.userMessage || 'Something went wrong. Please try again.');
+
+                // Reset button state
+                if (checkoutBtn) {
+                    checkoutBtn.textContent = 'Proceed to Checkout';
+                    checkoutBtn.disabled = false;
+                }
+            });
+    }
+
+    // Clear cart
+    clearCart() {
+        this.items = [];
+        this.saveCart();
+        this.updateCartCount();
+        this.updateCartUI();
+    }
+}
+
+// Show "Sold Out" on a product's detail page when inStock is false
+function applySoldOutButton() {
+    if (typeof getProductById !== 'function' || !window.CURRENT_PRODUCT_ID) return;
+    const product = getProductById(window.CURRENT_PRODUCT_ID);
+    const btn = document.getElementById('addToCartBtn');
+    if (product && btn) {
+        if (product.inStock === false) {
+            btn.disabled = true;
+            btn.textContent = 'Sold Out';
+            btn.style.opacity = '0.5';
+            btn.style.cursor = 'not-allowed';
+        } else {
+            btn.disabled = false;
+            btn.style.opacity = '';
+            btn.style.cursor = '';
+        }
+    }
+}
+
+// Pull live stock counts from the Airtable Inventory table (via the backend).
+// If it can't be reached, the inStock values in products-data.js are used as a fallback.
+async function applyLiveStock() {
+    if (typeof PRODUCTS === 'undefined') return;
+    try {
+        const resp = await fetch('https://btr-backend.vercel.app/stock');
+        if (!resp.ok) return;
+        const data = await resp.json();
+        if (!data.available) return;
+        PRODUCTS.forEach(p => {
+            if (typeof data.stock[p.id] === 'number') {
+                p.inStock = data.stock[p.id] > 0;
+                p.stockCount = data.stock[p.id];
+            }
+        });
+    } catch (e) {
+        console.log('Live stock unavailable, using products-data.js values');
+    }
+    applySoldOutButton();
+    // Re-draw the shop grid (all-products page) with the live stock status
+    if (typeof renderProductsGrid === 'function') renderProductsGrid();
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    applySoldOutButton();
+    applyLiveStock();
+});
+
+// Add notification animations to document
+const cartStyle = document.createElement('style');
+cartStyle.textContent = `
+    @keyframes slideInNotification {
+        from {
+            transform: translateX(400px);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+
+    @keyframes slideOutNotification {
+        from {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        to {
+            transform: translateX(400px);
+            opacity: 0;
+        }
+    }
+`;
+document.head.appendChild(cartStyle);
+
+// Initialize cart when DOM is ready
+let cart;
+document.addEventListener('DOMContentLoaded', () => {
+    cart = new ShoppingCart();
+});
